@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jogo</title>
+
+    <canvas width="600" height="400"></canvas>
+
+    <script>
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'lightgray';
+        pincel.fillRect(0, 0, 600, 400);
+
+
+        var x = 20
+        var y = 20;
+
+        //codigos do teclado
+        var esquerda = 37;
+        var cima = 38;
+        var direita = 39;
+        var baixo = 40;
+
+        function desenhaCirculo(x, y, raio) {
+            pincel.fillStyle = 'blue';
+            pincel.beginPath();
+            pincel.arc(x, y, raio, 0, 2 * Math.PI);
+            pincel.fill();
+        }
+
+        function limpaTela() {
+            //pincel.clearRect(0, 0, 600, 400);
+            pincel.fillStyle = 'lightgray';
+            pincel.fillRect(0, 0, 600, 400);
+        }
+
+        var sentido = 1;
+        function atualizaTela() {
+            limpaTela();
+            pegaPosicaoX();
+            pegaPosicaoY();
+            desenhaCirculo(x, y, 10);   
+            console.log('y ' + y); 
+            console.log('x ' + x);       
+            
+        }
+
+        function pegaPosicaoX(){
+            if(x > 590 && (y == 11 || y == 389)){
+                sentido = -1;
+                x += sentido;
+                return;
+            }
+            if(x < 10 &&(y == 11 || y == 389)){
+                sentido = 1;
+                x += sentido;
+                return;
+            } 
+            if (y == 20 || y == 390){
+                if (y == 390 ){
+                    sentido = -1;
+                }
+                if (y == 20 ){
+                    sentido = 1;
+                }
+                x += sentido;
+            }
+            return;
+        }
+
+        function pegaPosicaoY() {
+            if(y > 390 && (x == 590 || x == 11)) {
+                sentido = -1;
+                y += sentido;
+                return;
+            }
+            if (y < 10 && (x == 590 || x == 11)) {
+                sentido = 1;
+                y += sentido;
+                return;
+            }
+            if (x == 11 || x == 589){
+                y += sentido;
+                return;
+            }
+        }
+
+        //lendo teclado
+        function movimentaBolinha() {
+            let flag = true;
+            if (flag) {
+                atualizaTela();
+                x++;
+                if (x == 590) {
+                    flag = false;
+                }
+            }
+
+            if (!flag) {
+                atualizaTela();
+                x--;
+                if(x == 10){
+                    flag = true;
+                }
+            }
+        }
+
+        setInterval(atualizaTela, 2);
+        function exibeMensagem(){
+            console.log('chamei função');
+        }
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
